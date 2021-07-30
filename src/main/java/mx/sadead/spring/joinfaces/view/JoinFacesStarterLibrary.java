@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import java.io.Serializable;
 
-import javax.faces.view.ViewScoped;
-
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-
-import org.springframework.stereotype.Component;
 
 /**
- * Welcome Page.
+ * Store information about jsf component link.
+ *
  * @author Marcelo Fernandes
  */
-@Setter
 @Getter
-@Component
-@ViewScoped
-public class WelcomeMBean implements Serializable {
+@Builder
+public class JoinFacesStarterLibrary implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String text = "";
+	private String name;
+
+	private String site;
+
+	private String image;
+
+	private String version;
 }

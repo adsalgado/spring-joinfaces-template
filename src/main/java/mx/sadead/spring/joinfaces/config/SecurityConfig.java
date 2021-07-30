@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example;
+package mx.sadead.spring.joinfaces.config;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@SuppressFBWarnings("SPRING_CSRF_PROTECTION_DISABLED")
 	@Override
-	protected void configure(HttpSecurity http) {
+	public void configure(HttpSecurity http) {
 		try {
 			http.csrf().disable();
 			http

@@ -14,38 +14,28 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import javax.faces.convert.FacesConverter;
 
 /**
- * jsf component converter.
- *
+ * Custom converter component.
  * @author Marcelo Fernandes
  */
-@Component
-public class JoinFacesStarterConverter implements Converter {
-
-	@Autowired
-	private JoinFacesStarterService joinFacesStarterService;
+@FacesConverter("org.joinfaces.example.view.WelcomeConverter")
+public class WelcomeConverter implements Converter {
 
 	@Override
-	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-		return this.joinFacesStarterService.findByName(value);
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		return value + " welcome!";
 	}
 
 	@Override
-	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-		String result = null;
-		if (object != null) {
-			result = ((JoinFacesStarter) object).getName();
-		}
-		return result;
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		return value.toString();
 	}
 
 }

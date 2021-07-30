@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import java.io.IOException;
 import java.io.Serializable;

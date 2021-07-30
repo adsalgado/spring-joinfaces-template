@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
+import mx.sadead.spring.joinfaces.config.SecurityConfig;
+
 public class SecurityConfigIT {
 
 	@Test

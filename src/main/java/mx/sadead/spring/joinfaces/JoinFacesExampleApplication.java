@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces;
 
-import java.io.Serializable;
-
-import lombok.Builder;
-import lombok.Getter;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Store information about jsf component link.
- *
+ * JoinFaces Example Configuration class.
  * @author Marcelo Fernandes
  */
-@Getter
-@Builder
-public class JoinFacesStarterLibrary implements Serializable {
+@SpringBootApplication
+public class JoinFacesExampleApplication {
 
-	private static final long serialVersionUID = 1L;
-
-	private String name;
-
-	private String site;
-
-	private String image;
-
-	private String version;
+	/**
+	* Main method.
+	*/
+	public static void main(String[] args) {
+		SpringApplication.run(JoinFacesExampleApplication.class, args);
+	}
 }

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example;
+package mx.sadead.spring.joinfaces.config;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * JoinFaces Example Configuration class.
+ * Application users credentials.
  * @author Marcelo Fernandes
  */
-@SpringBootApplication
-public class JoinFacesExampleApplication {
-
-	/**
-	* Main method.
-	*/
-	public static void main(String[] args) {
-		SpringApplication.run(JoinFacesExampleApplication.class, args);
-	}
+@ConfigurationProperties("application-users")
+@Getter
+@Setter
+public class ApplicationUsers {
+	private List<UserCredentials> usersCredentials;
 }

@@ -16,12 +16,13 @@
 
 package org.joinfaces.example.view;
 
-import org.joinfaces.example.JoinFacesExampleApplication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import mx.sadead.spring.joinfaces.JoinFacesExampleApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

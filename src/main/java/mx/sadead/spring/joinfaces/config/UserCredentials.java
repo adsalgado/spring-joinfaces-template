@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example;
+package mx.sadead.spring.joinfaces.config;
 
 import java.util.List;
 

@@ -14,22 +14,28 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example;
+package mx.sadead.spring.joinfaces.view;
 
+import java.io.Serializable;
 import java.util.List;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Singular;
 
 /**
- * Application users credentials.
+ * Store information about jsf component.
+ *
  * @author Marcelo Fernandes
  */
-@ConfigurationProperties("application-users")
 @Getter
-@Setter
-public class ApplicationUsers {
-	private List<UserCredentials> usersCredentials;
+@Builder
+public class JoinFacesStarter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Singular
+	private List<JoinFacesStarterLibrary> libraries;
+
+	private String name;
 }
