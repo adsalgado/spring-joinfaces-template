@@ -21,3 +21,7 @@ application-users:
     - username: nyilmaz
       password: qwe
       authorities: ROLE_USER
+spring:
+  h2:
+    console:
+      enabled: true
