@@ -1,6 +1,7 @@
 package mx.sadead.spring.joinfaces.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Estatus implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
@@ -43,20 +44,20 @@ public class Estatus implements Serializable {
     public Estatus() {
     }
 
-    public Estatus(Integer id) {
+    public Estatus(Long id) {
         this.id = id;
     }
 
-    public Estatus(Integer id, String nombre) {
+    public Estatus(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

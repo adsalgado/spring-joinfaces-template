@@ -38,7 +38,7 @@ public class TipoEstatus implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
@@ -48,20 +48,20 @@ public class TipoEstatus implements Serializable {
     public TipoEstatus() {
     }
 
-    public TipoEstatus(Integer id) {
+    public TipoEstatus(Long id) {
         this.id = id;
     }
 
-    public TipoEstatus(Integer id, String nombre) {
+    public TipoEstatus(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
