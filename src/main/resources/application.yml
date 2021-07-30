@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:file:testdb
+    url: jdbc:h2:mem:testdb
 #    url: jdbc:h2:file:/Users/macpro/Documents/Adrian/sts/spring-guru-workspace
     driver-class-name: org.h2.Driver
     username: sa
