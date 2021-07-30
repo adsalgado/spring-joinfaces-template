@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,15 +28,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloTagPageIT extends AbstractPageIT {
+public class CustomInputPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkTagElement() {
-		HelloTagPage helloTagPage = initElements(HelloTagPage.class);
-		helloTagPage.navegateTo();
+	public void checkCustomInputElement() {
+		CustomInputPage customInputPage = initElements(CustomInputPage.class);
+		customInputPage.navegateTo();
 
-		assertThat(helloTagPage.getHelloWorldText())
-			.isEqualTo("Hello Tag File");
+		assertThat(customInputPage.getOutputText())
+			.isEqualTo("You entered: null");
 	}
 
+	@Test
+	public void submitHello() {
+		CustomInputPage customInputPage = initElements(CustomInputPage.class);
+		customInputPage.navegateTo();
+
+		customInputPage.submit("Hello");
+
+		assertThat(customInputPage.getOutputText())
+			.isEqualTo("You entered: Hello");
+	}
 }

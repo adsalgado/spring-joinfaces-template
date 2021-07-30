@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import lombok.Setter;
 import org.openqa.selenium.WebDriver;

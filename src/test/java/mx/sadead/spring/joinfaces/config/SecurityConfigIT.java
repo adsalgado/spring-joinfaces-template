@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example;
+package mx.sadead.spring.joinfaces.config;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -14,35 +14,54 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HelloTagPage extends AbstractPageComponent {
+public class WelcomeConverterPage extends AbstractPageComponent {
 
-	public HelloTagPage(WebDriver webDriver) {
+	@FindBy(name = "welcomeInput")
+	private WebElement welcomeInput;
+
+	@FindBy(name = "welcomeButton")
+	private WebElement welcomeButton;
+
+	public WelcomeConverterPage(WebDriver webDriver) {
 		super(webDriver);
 	}
 
 	@Override
 	protected String url() {
-		return "/helloTag.jsf";
+		return "/welcomeConverter.jsf";
 	}
 
-	private By getHelloWorldDivBy() {
-		return By.id("outputTextTagId");
+	public void submit(String message) {
+		this.welcomeInput.sendKeys(message);
+
+		this.welcomeButton.submit();
+
+		By outputTextBy = getOutputTextBy();
+		String expectedValue = message + " welcome!";
+
+		new WebDriverWait(webDriver, 5000).until(ExpectedConditions.textToBe(outputTextBy, expectedValue));
 	}
 
-	public String getHelloWorldText() {
-		return webDriver.findElement(getHelloWorldDivBy()).getText();
+	private By getOutputTextBy() {
+		return By.id("welcomeOutput");
 	}
 
-	public HelloTagPage waitLoad() {
+	public String getOutputText() {
+		return webDriver.findElement(getOutputTextBy()).getText();
+	}
+
+	public WelcomeConverterPage waitLoad() {
 		new WebDriverWait(webDriver, 10000).until(ExpectedConditions.presenceOfElementLocated(
-			getHelloWorldDivBy()));
+			getOutputTextBy()));
 
 		return this;
 	}

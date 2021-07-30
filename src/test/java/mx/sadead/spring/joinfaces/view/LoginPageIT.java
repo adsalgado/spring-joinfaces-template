@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,15 +28,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HiCCPageIT extends AbstractPageIT {
+public class LoginPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkCompositeComponentElement() {
-		HiCCPage hiCCPage = initElements(HiCCPage.class);
-		hiCCPage.navegateTo();
+	public void checkTitle() {
+		LoginPage loginPage = initElements(LoginPage.class);
+		loginPage.navegateTo();
 
-		assertThat(hiCCPage.getHiCCText())
-			.isEqualTo("Hi Composite Component");
+		assertThat(loginPage.getTitle())
+			.isEqualTo(".:: Login JoinFaces Example ::.");
+	}
+
+	@Test
+	public void loginWithAdminCredentials() {
+		LoginPage loginPage = initElements(LoginPage.class);
+		loginPage.navegateTo();
+
+		StarterPage starterPage = loginPage.login("persapiens", "123");
+
+		assertThat(starterPage.getAdminRoleLabelText())
+			.isEqualTo("Choose your starter as an ADMIN");
 	}
 
 }

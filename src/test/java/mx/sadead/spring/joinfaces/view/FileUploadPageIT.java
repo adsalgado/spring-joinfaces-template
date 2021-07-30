@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.joinfaces.example.view;
+package mx.sadead.spring.joinfaces.view;
+
+import java.io.File;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,25 +30,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomInputPageIT extends AbstractPageIT {
+public class FileUploadPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkCustomInputElement() {
-		CustomInputPage customInputPage = initElements(CustomInputPage.class);
-		customInputPage.navegateTo();
+	public void checkFileUploadElement() {
+		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
+		fileUploadPage.navegateTo();
 
-		assertThat(customInputPage.getOutputText())
-			.isEqualTo("You entered: null");
+		assertThat(fileUploadPage.isDownloadButtonEnabled())
+			.isFalse();
 	}
 
 	@Test
-	public void submitHello() {
-		CustomInputPage customInputPage = initElements(CustomInputPage.class);
-		customInputPage.navegateTo();
+	public void submitApplicationYml() {
+		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
+		fileUploadPage.navegateTo();
 
-		customInputPage.submit("Hello");
+		fileUploadPage.upload(new File("target/classes/application.yml").getAbsolutePath());
 
-		assertThat(customInputPage.getOutputText())
-			.isEqualTo("You entered: Hello");
+		assertThat(fileUploadPage.isDownloadButtonEnabled())
+			.isTrue();
 	}
 }

@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@SuppressFBWarnings("SPRING_CSRF_PROTECTION_DISABLED")
 	@Override
-	public void configure(HttpSecurity http) {
+	protected void configure(HttpSecurity http) {
 		try {
 			http.csrf().disable();
 			http
