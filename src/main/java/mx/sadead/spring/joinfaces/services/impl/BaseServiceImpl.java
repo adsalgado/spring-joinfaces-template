@@ -1,4 +1,4 @@
-package mx.sadead.spring.joinfaces.services;
+package mx.sadead.spring.joinfaces.services.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import mx.sadead.spring.joinfaces.repositories.BaseRepository;
+import mx.sadead.spring.joinfaces.services.BaseService;
 
 public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<T, ID> {
 

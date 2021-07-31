@@ -38,7 +38,7 @@ public class Estatus implements Serializable {
     private TipoEstatus tipoEstatus;
     @Basic(optional = false)
     @Column(name = "tipo_estatus_id")
-    private Integer tipoEstatusId;
+    private Long tipoEstatusId;
 
 
     public Estatus() {
@@ -77,11 +77,11 @@ public class Estatus implements Serializable {
         this.tipoEstatus = tipoEstatus;
     }
 
-    public Integer getTipoEstatusId() {
+    public Long getTipoEstatusId() {
         return tipoEstatusId;
     }
 
-    public void setTipoEstatusId(Integer tipoEstatusId) {
+    public void setTipoEstatusId(Long tipoEstatusId) {
         this.tipoEstatusId = tipoEstatusId;
     }
 

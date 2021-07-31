@@ -1,4 +1,4 @@
-package mx.sadead.spring.joinfaces.services;
+package mx.sadead.spring.joinfaces.services.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Service;
+
+import mx.sadead.spring.joinfaces.services.SqlQueryService;
 
 @Service
 public class SqlQueryServiceImpl implements SqlQueryService {

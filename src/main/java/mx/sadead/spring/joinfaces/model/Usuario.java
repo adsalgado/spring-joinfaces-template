@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
     private Integer activo;
     @Basic(optional = false)
     @Column(name = "estatus_id")
-    private Integer estatusId;
+    private Long estatusId;
     @Basic(optional = false)
     @Column(name = "user_name")
     private String userName;
@@ -195,11 +195,11 @@ public class Usuario implements Serializable {
         this.cuentaBloqueada = cuentaBloqueada;
     }
 
-    public Integer getEstatusId() {
+    public Long getEstatusId() {
         return estatusId;
     }
 
-    public void setEstatusId(Integer estatusId) {
+    public void setEstatusId(Long estatusId) {
         this.estatusId = estatusId;
     }
 

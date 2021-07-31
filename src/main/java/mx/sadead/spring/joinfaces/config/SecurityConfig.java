@@ -16,17 +16,20 @@
 
 package mx.sadead.spring.joinfaces.config;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Spring Security Configuration.
@@ -46,26 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) {
 		try {
 			http.csrf().disable();
-			http
-				.userDetailsService(userDetailsService())
-				.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/**.jsf").permitAll()
-				.antMatchers("/javax.faces.resource/**").permitAll()
-				.antMatchers("/h2-console/**").permitAll()
-				.anyRequest().authenticated()
-				.and()
-				.formLogin()
-				.loginPage("/login.jsf")
-				.permitAll()
-				.failureUrl("/login.jsf?error=true")
-				.defaultSuccessUrl("/starter.jsf")
-				.and()
-				.logout()
-				.logoutSuccessUrl("/login.jsf")
-				.deleteCookies("JSESSIONID");
-		}
-		catch (Exception ex) {
+			http.userDetailsService(userDetailsService()).authorizeRequests().antMatchers("/").permitAll()
+					.antMatchers("/**.jsf").permitAll().antMatchers("/javax.faces.resource/**").permitAll()
+					.antMatchers("/h2-console/**").permitAll().anyRequest().authenticated().and().formLogin()
+					.loginPage("/login.jsf").permitAll().failureUrl("/login.jsf?error=true")
+					.defaultSuccessUrl("/starter.jsf").and().logout().logoutSuccessUrl("/login.jsf")
+					.deleteCookies("JSESSIONID");
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 	}
@@ -74,11 +64,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager result = new InMemoryUserDetailsManager();
 		for (UserCredentials userCredentials : this.applicationUsers.getUsersCredentials()) {
-			result.createUser(User.withDefaultPasswordEncoder()
-				.username(userCredentials.getUsername())
-				.password(userCredentials.getPassword())
-				.authorities(userCredentials.getAuthorities().toArray(new String[0])).build());
+			result.createUser(User.withDefaultPasswordEncoder().username(userCredentials.getUsername())
+					.password(userCredentials.getPassword())
+					.authorities(userCredentials.getAuthorities().toArray(new String[0])).build());
 		}
 		return result;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
