@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -30,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import mx.sadead.spring.joinfaces.config.security.SSUserDetailsService;
 
 /**
  * Spring Security Configuration.
@@ -42,37 +44,40 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private ApplicationUsers applicationUsers;
+	private SSUserDetailsService ssUserDetailsService;
 
 	@SuppressFBWarnings("SPRING_CSRF_PROTECTION_DISABLED")
 	@Override
 	protected void configure(HttpSecurity http) {
 		try {
+
 			http.csrf().disable();
-			http.userDetailsService(userDetailsService()).authorizeRequests().antMatchers("/").permitAll()
-					.antMatchers("/**.jsf").permitAll().antMatchers("/javax.faces.resource/**").permitAll()
-					.antMatchers("/h2-console/**").permitAll().anyRequest().authenticated().and().formLogin()
-					.loginPage("/login.jsf").permitAll().failureUrl("/login.jsf?error=true")
-					.defaultSuccessUrl("/starter.jsf").and().logout().logoutSuccessUrl("/login.jsf")
-					.deleteCookies("JSESSIONID");
+			http.authorizeRequests()
+				.antMatchers("/").permitAll()
+				.antMatchers("/**.jsf").permitAll()
+				.antMatchers("/javax.faces.resource/**").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.formLogin().loginPage("/login.jsf").permitAll()
+				.failureUrl("/login.jsf?error=true")
+				.defaultSuccessUrl("/starter.jsf")
+				.and()
+				.logout()
+				.logoutSuccessUrl("/login.jsf")
+				.deleteCookies("JSESSIONID");
+
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 	}
 
-	@Override
-	protected UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager result = new InMemoryUserDetailsManager();
-		for (UserCredentials userCredentials : this.applicationUsers.getUsersCredentials()) {
-			result.createUser(User.withDefaultPasswordEncoder().username(userCredentials.getUsername())
-					.password(userCredentials.getPassword())
-					.authorities(userCredentials.getAuthorities().toArray(new String[0])).build());
-		}
-		return result;
-	}
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(ssUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 }
