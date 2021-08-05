@@ -1,39 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en-us"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateSinMenu.xhtml">
 
-    <f:view contentType="text/html">
-        <h:head>
-            <title>.:: Login JoinFaces Example ::.</title>
-            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
-            <link href="#{resource['images/favicon.ico']}" rel="shortcut icon"/>
-            <h:outputStylesheet library="css" name="example.css" />
-        </h:head>
+	<ui:define name="title">
+        Autenticación de usuarios
+    </ui:define>
 
-        <h:body>
-            <pe:layout fullPage="true" >
-                <pe:layoutPane id="mainLayoutPane" position="center" >
-                    <h:form prependId="false">
-                        <div id="mainDiv" class="ui-fluid center">
-                            <p:outputLabel value="Connection failed: user and/or password are wrong." 
-                                           rendered="${!empty param['error']}"/>
-                            <p:focus />
-                            <p:panelGrid columns="2" layout="grid">
-                                <h:outputText value="username" />
-                                <p:inputText id="username" />
-                                <h:outputText value="password" />
-                                <p:password id="password" />
-                            </p:panelGrid>
-                            <p:commandButton id="submit" value="Login" ajax="false" />
-                        </div>
-                    </h:form>
-                </pe:layoutPane>
-            </pe:layout>
-        </h:body>
-    </f:view>
-</html>
+	<ui:define name="description">
+        Capture su clave de usuario y password.
+    </ui:define>
+
+	<ui:define name="implementation">
+
+		<h:form prependId="false">
+			<p:outputLabel style="color: red"
+				value="Login failed: user and/or password are wrong."
+				rendered="${!empty param['error']}" />
+			<div class="card">
+				<h5>Datos</h5>
+				<div class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel for="username" value="Usuario" />
+						<p:inputText id="username" required="true" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel for="password" value="Password" />
+						<p:password id="password"  required="true" />
+					</div>
+				</div>
+				<p:commandButton id="submit" value="Login" ajax="false" />
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+
+	<ui:define name="content">
+		<div class="home">
+			<div id="homepage-intro"
+				class="introduction #{app.darkMode ? 'introduction-dark' : ''}">
+				<div class="introduction-promo">Always bet on Prime!</div>
+				<div class="introduction-title">The Ultimate UI Component
+					Library</div>
+				<div class="introduction-subtitle">for JSF</div>
+
+				<h:link styleClass="action-button" outcome="/getstarted">GET STARTED</h:link>
+				<p:graphicImage alt="devices" styleClass="introduction-devices"
+					name="images/home/intro-devices.png" library="showcase" />
+			</div>
+		</div>
+	</ui:define>
+	
+</ui:composition>

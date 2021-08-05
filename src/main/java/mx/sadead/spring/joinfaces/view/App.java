@@ -1,10 +1,17 @@
 package mx.sadead.spring.joinfaces.view;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
+
+import org.springframework.beans.factory.annotation.Value;
 
 import mx.sadead.spring.joinfaces.app.domain.Country;
 
@@ -12,13 +19,39 @@ import mx.sadead.spring.joinfaces.app.domain.Country;
 @SessionScoped
 public class App implements Serializable {
 
-    private String theme = "saga";
+    @Value("${joinfaces.primefaces.theme}")
+    private String theme;
+    private String cookieName;
+    private String cookieTheme;
+    private String currentTheme;
+    
+    private String contextPath;
+    
     private boolean darkMode = false;
     private String inputStyle = "outlined";
     private Country locale = new Country(0, Locale.US);
 
+    @PostConstruct
+    public void init() {
+//        contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        contextPath = "jsft";
+        cookieName = "primefaces-theme-" + contextPath.substring(1);
+        cookieTheme = "color-theme-" + contextPath.substring(1);
+
+        Map<String, Object> mapCookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
+        if (mapCookies != null && mapCookies.get(cookieName) != null) {
+            Cookie cookie = (Cookie) mapCookies.get(cookieName);
+            currentTheme = cookie.getValue();
+        } else if (theme != null) {
+            currentTheme = theme;
+        } else {
+            currentTheme = "saga";
+        }
+
+    }
+    
     public String getTheme() {
-        return theme;
+        return currentTheme;
     }
 
     public boolean isDarkMode() {
@@ -30,6 +63,10 @@ public class App implements Serializable {
     }
 
     public void setTheme(String theme) {
+    	Map<String, Object> properties = new HashMap<>();
+        properties.put("path", contextPath);
+        FacesContext.getCurrentInstance().getExternalContext().addResponseCookie(
+                cookieName, currentTheme, properties);
         this.theme = theme;
     }
 

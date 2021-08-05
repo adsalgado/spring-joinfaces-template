@@ -16,7 +16,7 @@ joinfaces:
     PROJECT_STAGE: Production
     FACELETS_LIBRARIES: /tags/tags.taglib.xml
   primefaces:
-    theme: vela
+    theme: saga
   version: @joinfaces.version@
 spring-boot:
   version: @project.parent.version@
