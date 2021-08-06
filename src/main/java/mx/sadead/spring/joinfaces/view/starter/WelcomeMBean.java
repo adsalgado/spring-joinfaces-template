@@ -14,55 +14,28 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.view.ViewScoped;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.file.UploadedFile;
 
 import org.springframework.stereotype.Component;
 
 /**
- * FileMBean to test primefaces upload component.
+ * Welcome Page.
  * @author Marcelo Fernandes
  */
+@Setter
+@Getter
 @Component
 @ViewScoped
-public class FileMBean implements Serializable {
+public class WelcomeMBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Getter
-	@Setter
-	private transient UploadedFile uploadedFile;
-
-	@Getter
-	private transient StreamedContent downloadFile;
-
-	/**
-	* Upload file action.
-	*/
-	public void upload() {
-		if (this.uploadedFile != null) {
-			this.downloadFile = DefaultStreamedContent.builder()
-				.stream(() -> {
-					try {
-						return this.uploadedFile.getInputStream();
-					}
-					catch (IOException ex) {
-						throw new RuntimeException(ex);
-					}
-				})
-				.contentType(this.uploadedFile.getContentType())
-				.name(this.uploadedFile.getFileName())
-				.build();
-		}
-	}
+	private String text = "";
 }
