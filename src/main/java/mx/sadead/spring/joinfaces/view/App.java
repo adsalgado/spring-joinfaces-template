@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.Cookie;
@@ -16,16 +16,16 @@ import org.springframework.beans.factory.annotation.Value;
 import mx.sadead.spring.joinfaces.app.domain.Country;
 
 @Named
-@SessionScoped
+@ApplicationScoped
 public class App implements Serializable {
 
-    @Value("${joinfaces.primefaces.theme}")
+    public static final String CONTEXT_PATH = "/jsft";
+    public static final String DARK_MODE = "darkMode";
+
+    @Value("${app.default.theme}")
     private String theme;
     private String cookieName;
-    private String cookieTheme;
-    private String currentTheme;
     
-    private String contextPath;
     
     private boolean darkMode = false;
     private String inputStyle = "outlined";
@@ -33,25 +33,25 @@ public class App implements Serializable {
 
     @PostConstruct
     public void init() {
-//        contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-        contextPath = "jsft";
-        cookieName = "primefaces-theme-" + contextPath.substring(1);
-        cookieTheme = "color-theme-" + contextPath.substring(1);
+
+        cookieName = "primefaces-theme-" + CONTEXT_PATH.substring(1);
 
         Map<String, Object> mapCookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
-        if (mapCookies != null && mapCookies.get(cookieName) != null) {
-            Cookie cookie = (Cookie) mapCookies.get(cookieName);
-            currentTheme = cookie.getValue();
-        } else if (theme != null) {
-            currentTheme = theme;
-        } else {
-            currentTheme = "saga";
-        }
+        if (mapCookies != null) {
+        	if (mapCookies.get(cookieName) != null) {
+                Cookie cookie = (Cookie) mapCookies.get(cookieName);
+                theme = cookie.getValue();        		
+        	}
+        	if (mapCookies.get(DARK_MODE) != null) {
+                Cookie cookie = (Cookie) mapCookies.get(DARK_MODE);
+                darkMode = Boolean.parseBoolean(cookie.getValue());        		
+        	}
+        } 
 
     }
     
     public String getTheme() {
-        return currentTheme;
+        return theme;
     }
 
     public boolean isDarkMode() {
@@ -63,10 +63,6 @@ public class App implements Serializable {
     }
 
     public void setTheme(String theme) {
-    	Map<String, Object> properties = new HashMap<>();
-        properties.put("path", contextPath);
-        FacesContext.getCurrentInstance().getExternalContext().addResponseCookie(
-                cookieName, currentTheme, properties);
         this.theme = theme;
     }
 
@@ -91,7 +87,13 @@ public class App implements Serializable {
     }
 
     public void changeTheme(String theme, boolean darkMode) {
-        this.theme = theme;
+       	Map<String, Object> properties = new HashMap<>();
+        properties.put("path", CONTEXT_PATH);
+        FacesContext.getCurrentInstance().getExternalContext().addResponseCookie(
+                cookieName, theme, properties);
+        FacesContext.getCurrentInstance().getExternalContext().addResponseCookie(
+                DARK_MODE, String.valueOf(darkMode), properties);
+        this.theme = theme; 
         this.darkMode = darkMode;
     }
 

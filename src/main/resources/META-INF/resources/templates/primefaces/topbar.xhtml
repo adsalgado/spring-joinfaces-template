@@ -33,11 +33,6 @@
                         <li><p:commandLink actionListener="#{app.changeTheme('saga', false)}" oncomplete="App.changeTheme('saga', false)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/saga.png" alt="Saga"/><span>Saga</span></p:commandLink></li>
                         <li><p:commandLink actionListener="#{app.changeTheme('vela', true)}" oncomplete="App.changeTheme('vela', true)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/vela.png" alt="Vela"/><span>Vela</span></p:commandLink></li>
                         <li><p:commandLink actionListener="#{app.changeTheme('arya', true)}" oncomplete="App.changeTheme('arya', true)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/arya.png" alt="Arya"/><span>Arya</span></p:commandLink></li>
-                        <li class="topbar-submenu-header">PREMIUM</li>
-                        <li><p:commandLink actionListener="#{app.changeTheme('bootstrap4-blue-light', false)}" oncomplete="App.changeTheme('bootstrap4-blue-light', false)" update=":app-theme-logo"><p:graphicImage name="images/themes/bootstrap4-light-blue.svg" library="showcase" alt="Blue Light"/><span>Bootstrap Blue Light</span></p:commandLink></li>
-                        <li><p:commandLink actionListener="#{app.changeTheme('bootstrap4-purple-light', false)}" oncomplete="App.changeTheme('bootstrap4-purple-light', false)" update=":app-theme-logo"><p:graphicImage name="images/themes/bootstrap4-light-purple.svg" library="showcase" alt="Purple Light"/><span>Bootstrap Purple Light</span></p:commandLink></li>
-                        <li><p:commandLink actionListener="#{app.changeTheme('bootstrap4-blue-dark', true)}" oncomplete="App.changeTheme('bootstrap4-blue-dark', true)" update=":app-theme-logo"><p:graphicImage name="images/themes/bootstrap4-dark-blue.svg" library="showcase" alt="Blue Dark"/><span>Bootstrap Blue Dark</span></p:commandLink></li>
-                        <li><p:commandLink actionListener="#{app.changeTheme('bootstrap4-purple-dark', true)}" oncomplete="App.changeTheme('bootstrap4-purple-dark', true)" update=":app-theme-logo"><p:graphicImage name="images/themes/bootstrap4-dark-purple.svg" library="showcase" alt="Purple Dark"/><span>Bootstrap Purple Dark</span></p:commandLink></li>
                         <li class="topbar-submenu-header">LEGACY</li>
                         <li><p:commandLink actionListener="#{app.changeTheme('nova-light', false)}" oncomplete="App.changeTheme('nova-light', false)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/nova.png" alt="Nova"/><span>Nova</span></p:commandLink></li>
                         <li><p:commandLink actionListener="#{app.changeTheme('nova-dark', true)}" oncomplete="App.changeTheme('nova-dark', true)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/nova-alt.png" alt="Nova Alt"/><span>Nova Alt</span></p:commandLink></li>
@@ -48,16 +43,23 @@
                         <li><p:commandLink actionListener="#{app.changeTheme('luna-pink', true)}" oncomplete="App.changeTheme('luna-pink', true)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/luna-pink.png" alt="Luna Pink"/><span>Luna Pink</span></p:commandLink></li>
                     </ul>
                 </li>
-                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" >
                 <li>
-                	<p:link title="Logout" href="/catalogos/index.xhtml">
+                	<p:link title="Catálogos" href="/aplicacion/catalogos/index.xhtml">
                   	 	Catálogos
+                	</p:link>
+               	</li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" >
+                <li>
+                	<p:link title="Operación" href="/aplicacion/operacion/index.xhtml">
+                  	 	Operación
                 	</p:link>
                	</li>
                 </sec:authorize>
                 <sec:anonymous>
                 <li>
-                    <h:link outcome="/login.jsf">Login</h:link>
+                    <h:link outcome="/login.xhtml">Login</h:link>
                 </li>
                 </sec:anonymous>
                 <sec:authenticated>

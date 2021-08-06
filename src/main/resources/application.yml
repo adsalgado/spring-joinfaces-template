@@ -10,13 +10,15 @@ spring:
   h2:
     console:
       enabled: true
-      
+app:
+  default:
+    theme: saga
 joinfaces:
   jsf:
     PROJECT_STAGE: Production
     FACELETS_LIBRARIES: /tags/tags.taglib.xml
-  primefaces:
-    theme: saga
+  primefaces: 
+    theme: ${app.theme}
   version: @joinfaces.version@
 spring-boot:
   version: @project.parent.version@

@@ -54,16 +54,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.csrf().disable();
 			http.authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/**.jsf").permitAll()
+				.antMatchers("/**.jsf", "/**.xhtml").permitAll()
 				.antMatchers("/javax.faces.resource/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
-				.formLogin().loginPage("/login.jsf").permitAll()
-				.failureUrl("/login.jsf?error=true")
-				.defaultSuccessUrl("/inicio.jsf")
+				.formLogin().loginPage("/login.xhtml").permitAll()
+				.failureUrl("/login.xhtml?error=true")
+				.defaultSuccessUrl("/inicio.xhtml")
 				.and()
 				.logout()
-				.logoutSuccessUrl("/login.jsf")
+				.logoutSuccessUrl("/login.xhtml")
 				.deleteCookies("JSESSIONID");
 
 		} catch (Exception ex) {
