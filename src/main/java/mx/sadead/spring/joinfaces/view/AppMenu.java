@@ -5,18 +5,26 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 
 import mx.sadead.spring.joinfaces.app.menu.MenuCategory;
 import mx.sadead.spring.joinfaces.app.menu.MenuItem;
+import mx.sadead.spring.joinfaces.constants.Constants;
+import mx.sadead.spring.joinfaces.session.IUserSessionContext;
 
 @Named
-@ApplicationScoped
+@SessionScoped
 public class AppMenu {
+	
+	private final IUserSessionContext userSessionContext;
 
 	private List<MenuCategory> menuCategories;
 	private List<MenuItem> menuItems;
+	
+	public AppMenu(IUserSessionContext userSessionContext) {
+		this.userSessionContext = userSessionContext;
+	}
 
 	// CHECKSTYLE:OFF
 	@PostConstruct
@@ -27,10 +35,11 @@ public class AppMenu {
 		// GENERAL CATEGORY START
 		List<MenuItem> generalMenuItems = new ArrayList<>();
 		generalMenuItems.add(new MenuItem("Get Started", "/inicio.xhtml"));
-		generalMenuItems.add(new MenuItem("Documentation", "https://primefaces.github.io/primefaces/10_0_0/#/"));
-		generalMenuItems.add(new MenuItem("Content Security",
-				"https://primefaces.github.io/primefaces/10_0_0/#/core/contentsecuritypolicy"));
-		menuCategories.add(new MenuCategory("General", generalMenuItems));
+		
+		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN)) {
+			generalMenuItems.add(new MenuItem("Usuarios", "/aplicacion/catalogos/usuarios.xhtml"));
+		}
+		menuCategories.add(new MenuCategory("General", generalMenuItems));			
 		// GENERAL CATEGORY END
 
 		for (MenuCategory category : menuCategories) {

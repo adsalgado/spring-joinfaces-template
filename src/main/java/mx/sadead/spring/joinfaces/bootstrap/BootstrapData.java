@@ -95,7 +95,25 @@ public class BootstrapData implements CommandLineRunner {
 		adminRol1.setRolId(rol1.getId());
 		
 		usuarioRolService.save(adminRol1);
+
+		Usuario user = new Usuario();
+		user.setActivo(1);
+		user.setEmail("user@gmail.com");
+		user.setUserName("user");
+		user.setPassword(passwordEncoder.encode("user"));
+		user.setNombre("USUARIO");
+		user.setPaterno("GENERAL");
+		user.setEstatusId(estatusActivo.getId());
 		
+		usuarioService.save(user);
+		LOGGER.info("admin: {}", user.getPassword());
+		
+		UsuarioRol userRol1 = new UsuarioRol();
+		userRol1.setUsuarioId(user.getId());
+		userRol1.setRolId(rol2.getId());
+		
+		usuarioRolService.save(userRol1);
+
 		LOGGER.info("Users findAll: {}", usuarioService.findAll());
 
 		LOGGER.info("TESTING SQL CUSTOM QUERY");

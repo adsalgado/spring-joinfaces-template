@@ -6,17 +6,17 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import mx.sadead.spring.joinfaces.app.domain.Country;
 
-@Named
-@ApplicationScoped
+@Component
+@ApplicationScope
 public class App implements Serializable {
 
     public static final String CONTEXT_PATH = "/jsft";
