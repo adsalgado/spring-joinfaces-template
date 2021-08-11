@@ -8,4 +8,5 @@ import mx.sadead.spring.joinfaces.model.UsuarioRol;
 public interface UsuarioService extends BaseService<Usuario, Long> {
 	Usuario findOneByUserName(String username);
 	List<UsuarioRol> getRolesByUsername(String userName);
+	void saveUsuarioPerfiles(Usuario current, List<Long> idRoles);
 }

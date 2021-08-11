@@ -5,16 +5,17 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import mx.sadead.spring.joinfaces.app.menu.MenuCategory;
 import mx.sadead.spring.joinfaces.app.menu.MenuItem;
 import mx.sadead.spring.joinfaces.constants.Constants;
 import mx.sadead.spring.joinfaces.session.IUserSessionContext;
 
-@Named
-@SessionScoped
+@Component
+@SessionScope
 public class AppMenu {
 	
 	private final IUserSessionContext userSessionContext;
@@ -39,6 +40,12 @@ public class AppMenu {
 		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN)) {
 			generalMenuItems.add(new MenuItem("Usuarios", "/aplicacion/catalogos/usuarios.xhtml"));
 		}
+		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN, Constants.ROLE_USER)) {
+			generalMenuItems.add(new MenuItem("Opciones", "/aplicacion/catalogos/opciones.xhtml"));
+			generalMenuItems.add(new MenuItem("Perfiles", "/aplicacion/catalogos/perfiles.xhtml"));
+			generalMenuItems.add(new MenuItem("Cambio password", "/aplicacion/catalogos/cambioPassword.xhtml"));
+		}
+
 		menuCategories.add(new MenuCategory("General", generalMenuItems));			
 		// GENERAL CATEGORY END
 

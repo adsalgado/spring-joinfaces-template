@@ -19,48 +19,48 @@ import mx.sadead.spring.joinfaces.services.SqlQueryService;
 public class SqlQueryServiceImpl implements SqlQueryService {
 
 	@PersistenceContext
-    private final EntityManager entityManager;
+	private final EntityManager entityManager;
 
-    public SqlQueryServiceImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-    
+	public SqlQueryServiceImpl(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
 	@Override
 	public <TEntity> List<TEntity> findAllByQueryNativeToEntity(Class<TEntity> eClazz, String queryNative,
 			Object... params) {
 		Query query = entityManager.createNativeQuery(queryNative, eClazz);
-        int noParam = 1;
-        for (Object param : params) {
-            query.setParameter(noParam, param);
-            noParam++;
-        }
-        return query.getResultList();
+		int noParam = 1;
+		for (Object param : params) {
+			query.setParameter(noParam, param);
+			noParam++;
+		}
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Object[]> findAllByQueryNative(String queryNative, Object... params) {
 		Query query = entityManager.createNativeQuery(queryNative);
-        int noParam = 1;
-        for (Object param : params) {
-            query.setParameter(noParam, param);
-            noParam++;
-        }
-        return query.getResultList();
+		int noParam = 1;
+		for (Object param : params) {
+			query.setParameter(noParam, param);
+			noParam++;
+		}
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Map<String, Object>> findAllByQueryNativeToMap(String queryNative, Object... params) {
-		Session session = (Session) entityManager.unwrap(Session.class);
-        SQLQuery query = session.createSQLQuery(queryNative);
-        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+		Session session = entityManager.unwrap(Session.class);
+		SQLQuery<Map<String, Object>> query = session.createSQLQuery(queryNative);
+		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
-        int noParam = 0;
-        for (Object param : params) {
-            query.setParameter(noParam, param);
-            noParam++;
-        }
+		int noParam = 0;
+		for (Object param : params) {
+			query.setParameter(noParam, param);
+			noParam++;
+		}
 
-        return query.list();
+		return query.list();
 	}
 
 	@Override
@@ -70,15 +70,15 @@ public class SqlQueryServiceImpl implements SqlQueryService {
 
 	@Override
 	public <TEntity> List<TEntity> findByCriteria(DetachedCriteria criteria, Integer firstResult, Integer maxResults) {
-		Session session = (Session) entityManager.unwrap(Session.class);
-        Criteria executableCriteria = criteria.getExecutableCriteria(session);
-        if (firstResult != null) {
-            executableCriteria.setFirstResult(firstResult);
-        }
-        if (maxResults != null) {
-            executableCriteria.setMaxResults(maxResults);
-        }
-        return executableCriteria.list();
+		Session session = entityManager.unwrap(Session.class);
+		Criteria executableCriteria = criteria.getExecutableCriteria(session);
+		if (firstResult != null) {
+			executableCriteria.setFirstResult(firstResult);
+		}
+		if (maxResults != null) {
+			executableCriteria.setMaxResults(maxResults);
+		}
+		return executableCriteria.list();
 	}
 
 }

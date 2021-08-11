@@ -1,5 +1,6 @@
 package mx.sadead.spring.joinfaces.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +30,23 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
 	@Override
 	public List<UsuarioRol> getRolesByUsername(String userName) {
 		return usuarioRolRepository.findByUserName(userName);
+	}
+
+	@Override
+	public void saveUsuarioPerfiles(Usuario usuario, List<Long> idRoles) {
+		usuarioRepository.save(usuario);
+        List<UsuarioRol> ur = getRolesByUsername(usuario.getUserName());
+        for (UsuarioRol usuarioRol : ur) {
+            usuarioRolRepository.deleteById(usuarioRol.getId());
+        }
+        List<UsuarioRol> usuarioRoles = new ArrayList<>();
+        for (Long rolId : idRoles) {
+            UsuarioRol usuarioRol = new UsuarioRol();
+            usuarioRol.setUsuarioId(usuario.getId());
+            usuarioRol.setRolId(rolId);
+            usuarioRoles.add(usuarioRol);
+        }
+        usuarioRolRepository.saveAll(usuarioRoles);
 	}
 
 }
