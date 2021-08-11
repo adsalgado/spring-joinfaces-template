@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
-
-import java.io.File;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,25 +28,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class FileUploadPageIT extends AbstractPageIT {
+public class WelcomeConverterPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkFileUploadElement() {
-		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
-		fileUploadPage.navegateTo();
+	public void checkCustomInputElement() {
+		WelcomeConverterPage page = initElements(WelcomeConverterPage.class);
+		page.navegateTo();
 
-		assertThat(fileUploadPage.isDownloadButtonEnabled())
-			.isFalse();
+		assertThat(page.getOutputText())
+			.isEqualTo("");
 	}
 
 	@Test
-	public void submitApplicationYml() {
-		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
-		fileUploadPage.navegateTo();
+	public void submitHello() {
+		WelcomeConverterPage page = initElements(WelcomeConverterPage.class);
+		page.navegateTo();
 
-		fileUploadPage.upload(new File("target/classes/application.yml").getAbsolutePath());
+		page.submit("Hello");
 
-		assertThat(fileUploadPage.isDownloadButtonEnabled())
-			.isTrue();
+		assertThat(page.getOutputText())
+			.isEqualTo("Hello welcome!");
 	}
+
 }

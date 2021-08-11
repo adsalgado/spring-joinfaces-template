@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

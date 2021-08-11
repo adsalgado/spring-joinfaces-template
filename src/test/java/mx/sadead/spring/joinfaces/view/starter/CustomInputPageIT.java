@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,26 +28,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginPageIT extends AbstractPageIT {
+public class CustomInputPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkTitle() {
-		LoginPage loginPage = initElements(LoginPage.class);
-		loginPage.navegateTo();
+	public void checkCustomInputElement() {
+		CustomInputPage customInputPage = initElements(CustomInputPage.class);
+		customInputPage.navegateTo();
 
-		assertThat(loginPage.getTitle())
-			.isEqualTo(".:: Login JoinFaces Example ::.");
+		assertThat(customInputPage.getOutputText())
+			.isEqualTo("You entered: null");
 	}
 
 	@Test
-	public void loginWithAdminCredentials() {
-		LoginPage loginPage = initElements(LoginPage.class);
-		loginPage.navegateTo();
+	public void submitHello() {
+		CustomInputPage customInputPage = initElements(CustomInputPage.class);
+		customInputPage.navegateTo();
 
-		StarterPage starterPage = loginPage.login("persapiens", "123");
+		customInputPage.submit("Hello");
 
-		assertThat(starterPage.getAdminRoleLabelText())
-			.isEqualTo("Choose your starter as an ADMIN");
+		assertThat(customInputPage.getOutputText())
+			.isEqualTo("You entered: Hello");
 	}
-
 }

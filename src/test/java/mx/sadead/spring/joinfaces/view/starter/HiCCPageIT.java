@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,15 +28,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloTagPageIT extends AbstractPageIT {
+public class HiCCPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkTagElement() {
-		HelloTagPage helloTagPage = initElements(HelloTagPage.class);
-		helloTagPage.navegateTo();
+	public void checkCompositeComponentElement() {
+		HiCCPage hiCCPage = initElements(HiCCPage.class);
+		hiCCPage.navegateTo();
 
-		assertThat(helloTagPage.getHelloWorldText())
-			.isEqualTo("Hello Tag File");
+		assertThat(hiCCPage.getHiCCText())
+			.isEqualTo("Hi Composite Component");
 	}
 
 }

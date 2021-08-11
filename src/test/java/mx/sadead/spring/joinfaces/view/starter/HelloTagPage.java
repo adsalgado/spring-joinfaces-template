@@ -14,54 +14,35 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CustomInputPage extends AbstractPageComponent {
+public class HelloTagPage extends AbstractPageComponent {
 
-	@FindBy(name = "customInput:inputfield")
-	private WebElement inputByName;
-
-	@FindBy(name = "customInput:submit")
-	private WebElement buttonByName;
-
-	public CustomInputPage(WebDriver webDriver) {
+	public HelloTagPage(WebDriver webDriver) {
 		super(webDriver);
 	}
 
 	@Override
 	protected String url() {
-		return "/customInput.jsf";
+		return "/helloTag.jsf";
 	}
 
-	public void submit(String message) {
-		this.inputByName.sendKeys(message);
-
-		this.buttonByName.click();
-
-		By outputTextBy = getOutputTextBy();
-		String expectedValue = "You entered: " + message;
-
-		new WebDriverWait(webDriver, 5000).until(ExpectedConditions.textToBe(outputTextBy, expectedValue));
+	private By getHelloWorldDivBy() {
+		return By.id("outputTextTagId");
 	}
 
-	private By getOutputTextBy() {
-		return By.xpath("//p");
+	public String getHelloWorldText() {
+		return webDriver.findElement(getHelloWorldDivBy()).getText();
 	}
 
-	public String getOutputText() {
-		return webDriver.findElement(getOutputTextBy()).getText();
-	}
-
-	public CustomInputPage waitLoad() {
+	public HelloTagPage waitLoad() {
 		new WebDriverWait(webDriver, 10000).until(ExpectedConditions.presenceOfElementLocated(
-			getOutputTextBy()));
+			getHelloWorldDivBy()));
 
 		return this;
 	}

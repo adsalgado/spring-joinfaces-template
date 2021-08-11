@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
+
+import java.io.File;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,15 +30,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JoinFacesExampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HiCCPageIT extends AbstractPageIT {
+public class FileUploadPageIT extends AbstractPageIT {
 
 	@Test
-	public void checkCompositeComponentElement() {
-		HiCCPage hiCCPage = initElements(HiCCPage.class);
-		hiCCPage.navegateTo();
+	public void checkFileUploadElement() {
+		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
+		fileUploadPage.navegateTo();
 
-		assertThat(hiCCPage.getHiCCText())
-			.isEqualTo("Hi Composite Component");
+		assertThat(fileUploadPage.isDownloadButtonEnabled())
+			.isFalse();
 	}
 
+	@Test
+	public void submitApplicationYml() {
+		FileUploadPage fileUploadPage = initElements(FileUploadPage.class);
+		fileUploadPage.navegateTo();
+
+		fileUploadPage.upload(new File("target/classes/application.yml").getAbsolutePath());
+
+		assertThat(fileUploadPage.isDownloadButtonEnabled())
+			.isTrue();
+	}
 }

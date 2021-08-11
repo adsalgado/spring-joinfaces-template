@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package mx.sadead.spring.joinfaces.view;
+package mx.sadead.spring.joinfaces.view.starter;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,43 +23,47 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FileUploadPage extends AbstractPageComponent {
+public class CustomInputPage extends AbstractPageComponent {
 
-	@FindBy(name = "fileUpload_input")
-	private WebElement fileUploadInput;
+	@FindBy(name = "customInput:inputfield")
+	private WebElement inputByName;
 
-	@FindBy(name = "submitButton")
-	private WebElement submitButton;
+	@FindBy(name = "customInput:submit")
+	private WebElement buttonByName;
 
-	public FileUploadPage(WebDriver webDriver) {
+	public CustomInputPage(WebDriver webDriver) {
 		super(webDriver);
 	}
 
 	@Override
 	protected String url() {
-		return "/fileUpload.jsf";
+		return "/customInput.jsf";
 	}
 
-	private By getDownloadButtonBy() {
-		return By.name("downloadButton");
+	public void submit(String message) {
+		this.inputByName.sendKeys(message);
+
+		this.buttonByName.click();
+
+		By outputTextBy = getOutputTextBy();
+		String expectedValue = "You entered: " + message;
+
+		new WebDriverWait(webDriver, 5000).until(ExpectedConditions.textToBe(outputTextBy, expectedValue));
 	}
 
-	public void upload(String file) {
-		this.fileUploadInput.sendKeys(file);
-
-		this.submitButton.click();
-
-		new WebDriverWait(webDriver, 10000).until(ExpectedConditions.elementToBeClickable(getDownloadButtonBy()));
+	private By getOutputTextBy() {
+		return By.xpath("//p");
 	}
 
-	public boolean isDownloadButtonEnabled() {
-		return webDriver.findElement(getDownloadButtonBy()).isEnabled();
+	public String getOutputText() {
+		return webDriver.findElement(getOutputTextBy()).getText();
 	}
 
-	public FileUploadPage waitLoad() {
+	public CustomInputPage waitLoad() {
 		new WebDriverWait(webDriver, 10000).until(ExpectedConditions.presenceOfElementLocated(
-			getDownloadButtonBy()));
+			getOutputTextBy()));
 
 		return this;
 	}
+
 }
