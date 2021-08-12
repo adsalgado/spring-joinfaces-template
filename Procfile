@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/joinfaces-example-4.5.1.jar
+web: java -Dserver.port=$PORT -jar target/spring-joinfaces-template-0.0.2-SNAPSHOT.jar
