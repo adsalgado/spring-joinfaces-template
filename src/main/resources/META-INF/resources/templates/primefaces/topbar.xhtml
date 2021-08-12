@@ -43,13 +43,13 @@
                         <li><p:commandLink actionListener="#{app.changeTheme('luna-pink', true)}" oncomplete="App.changeTheme('luna-pink', true)" update=":app-theme-logo"><h:graphicImage name="showcase/images/themes/luna-pink.png" alt="Luna Pink"/><span>Luna Pink</span></p:commandLink></li>
                     </ul>
                 </li>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" >
-                <li>
-                	<p:link title="Catálogos" href="/aplicacion/catalogos/index.xhtml">
-                  	 	Catálogos
-                	</p:link>
-               	</li>
-                </sec:authorize>
+<!--                 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" > -->
+<!--                 <li> -->
+<!--                 	<p:link title="Catálogos" href="/aplicacion/catalogos/index.xhtml"> -->
+<!--                   	 	Catálogos -->
+<!--                 	</p:link> -->
+<!--                	</li> -->
+<!--                 </sec:authorize> -->
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" >
                 <li>
                 	<p:link title="Operación" href="/aplicacion/operacion/index.xhtml">

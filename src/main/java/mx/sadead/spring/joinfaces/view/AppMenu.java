@@ -33,20 +33,32 @@ public class AppMenu {
 		menuCategories = new ArrayList<>();
 		menuItems = new ArrayList<>();
 
-		// GENERAL CATEGORY START
-		List<MenuItem> generalMenuItems = new ArrayList<>();
-		generalMenuItems.add(new MenuItem("Get Started", "/inicio.xhtml"));
+		// SECURITY CATEGORY START
+		List<MenuItem> seguridadMenuItems = new ArrayList<>();
 		
 		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN)) {
-			generalMenuItems.add(new MenuItem("Usuarios", "/aplicacion/catalogos/usuarios.xhtml"));
+			seguridadMenuItems.add(new MenuItem("Usuarios", "/aplicacion/seguridad/usuarios.xhtml"));
+			seguridadMenuItems.add(new MenuItem("Cambio password", "/aplicacion/seguridad/cambioPassword.xhtml"));
 		}
 		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN, Constants.ROLE_USER)) {
-			generalMenuItems.add(new MenuItem("Opciones", "/aplicacion/catalogos/opciones.xhtml"));
-			generalMenuItems.add(new MenuItem("Perfiles", "/aplicacion/catalogos/perfiles.xhtml"));
-			generalMenuItems.add(new MenuItem("Cambio password", "/aplicacion/catalogos/cambioPassword.xhtml"));
+//			seguridadMenuItems.add(new MenuItem("Opciones", "/aplicacion/seguridad/opciones.xhtml"));
+//			seguridadMenuItems.add(new MenuItem("Perfiles", "/aplicacion/seguridad/perfiles.xhtml"));
 		}
 
-		menuCategories.add(new MenuCategory("General", generalMenuItems));			
+		if (!seguridadMenuItems.isEmpty()) {
+			menuCategories.add(new MenuCategory("Seguridad", seguridadMenuItems));						
+		}
+		// GENERAL CATEGORY END
+
+		// SECURITY CATEGORY START
+		List<MenuItem> operacionMenuItems = new ArrayList<>();
+		
+		if (userSessionContext.hasAnyRol(Constants.ROLE_ADMIN, Constants.ROLE_USER)) {
+			operacionMenuItems.add(new MenuItem("Opciones", "/aplicacion/catalogos/documentos.xhtml"));
+		}
+		if (!operacionMenuItems.isEmpty()) {
+			menuCategories.add(new MenuCategory("Operación", operacionMenuItems));						
+		}
 		// GENERAL CATEGORY END
 
 		for (MenuCategory category : menuCategories) {
