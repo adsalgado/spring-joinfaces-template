@@ -1,0 +1,91 @@
+entity Cliente {
+    rfc String
+	nombre String
+}
+
+entity Documento {
+	nombre String
+}
+
+entity SerieDocumental {
+	name String
+}
+
+entity DocumentoSerie {
+	name String
+}
+
+entity DocumentoSerieValidacion {
+	name String
+}
+
+entity Validacion {
+	name String
+}
+
+entity DataValidacion {
+	
+}
+
+entity Control {
+
+}
+
+entity Operatoria {
+	name String
+}
+
+entity Expediente {
+	name String
+}
+
+entity ExpedienteExpurgo {
+	name String
+}
+
+entity TipoEstatus {
+	name String
+}
+
+entity Estatus {
+	name String
+}
+
+entity ArchivoDigital {
+
+}
+
+relationship ManyToOne {
+	ExpedienteExpurgo to ArchivoDigital
+}
+
+relationship ManyToOne {
+	Estatus to TipoEstatus
+    Expediente to Estatus
+    ExpedienteExpurgo to Estatus
+}
+
+relationship ManyToOne {
+	ExpedienteExpurgo{expediente} to Expediente
+    ExpedienteExpurgo{documentoSerieValidacion} to DocumentoSerieValidacion
+}
+
+relationship ManyToOne {
+	Validacion{dataValidacion} to DataValidacion
+    Validacion{control} to Control
+}
+
+relationship ManyToOne {
+	DocumentoSerieValidacion{documentoSerie} to DocumentoSerie
+    DocumentoSerieValidacion{Validacion} to Validacion
+}
+relationship ManyToOne {
+	DocumentoSerieValidacion{documentoSerie} to DocumentoSerie
+    DocumentoSerieValidacion{Validacion} to Validacion
+}
+relationship ManyToOne {
+	Operatoria{cliente} to Cliente
+	SerieDocumental{operatoria} to Operatoria
+    DocumentoSerie{serieDocumental} to SerieDocumental
+    DocumentoSerie{documento} to Documento
+}
